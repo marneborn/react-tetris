@@ -1,0 +1,31 @@
+{
+  "name": "react-tetris",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marneborn/react-tetris.git"
+  },
+  "keywords": [
+    "react",
+    "learning",
+    "tetris"
+  ],
+  "author": "Mikael Arneborn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marneborn/react-tetris/issues"
+  },
+  "homepage": "https://github.com/marneborn/react-tetris#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^3.19.0",
+    "grunt-eslint": "^19.0.0",
+    "load-grunt-tasks": "^3.5.2",
+    "mocha": "^3.2.0"
+  }
+}
