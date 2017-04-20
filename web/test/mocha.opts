@@ -1,0 +1,3 @@
+#--require ./web/test/utils/dom.js
+--require ./web/test/utils/globals.js
+--reporter dot
