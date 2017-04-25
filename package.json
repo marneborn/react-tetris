@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "npm test"
+    "test-web": "mocha --opts web/test/mocha.opts web/test || true"
   },
   "repository": {
     "type": "git",
