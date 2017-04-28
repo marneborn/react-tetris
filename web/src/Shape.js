@@ -88,4 +88,4 @@ function stringToRow(string) {
   return chars.map(c => c !== '.');
 }
 
-export { Shape }
+module.exports = Shape;

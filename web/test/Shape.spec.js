@@ -1,8 +1,9 @@
 'use strict';
 
 const shapeHelpers = require('./utils/shape');
+const Shape = require('../src/Shape');
 
-import {Shape} from '../src/Shape.js';
+// import {Shape} from '../src/Shape.js';
 
 describe('#Shape', function() {
 

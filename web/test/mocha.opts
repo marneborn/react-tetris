@@ -1,4 +1,0 @@
---check-leaks
---require ./web/test/utils/globals.js
---require babel-register
---reporter dot
