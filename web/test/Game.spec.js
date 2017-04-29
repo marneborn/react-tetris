@@ -1,6 +1,6 @@
 'use strict';
 
-import {Game} from '../src/Game.js';
+const Game = require('../src/Game');
 
 describe('#Game', function() {
   it('should pass', function() {
