@@ -4,6 +4,8 @@ const CELLS = Symbol('cells');
 const HEIGHT = Symbol('height');
 const WIDTH = Symbol('width');
 
+console.log("Loading Shape");
+
 class Shape {
 
   constructor(opts = {}) {
