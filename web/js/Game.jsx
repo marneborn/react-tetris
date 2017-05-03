@@ -1,6 +1,7 @@
 'use strict';
 
 const React = require('react');
+const Shape = require('./Shape');
 
 const ScoreBoard = require('./ScoreBoard');
 

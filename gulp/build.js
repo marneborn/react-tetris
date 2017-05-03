@@ -1,11 +1,13 @@
 'use strict';
 
+const _ = require('lodash');
 const $ = require('gulp-load-plugins')();
 const babel = require('gulp-babel');
 const babelify = require('babelify');
 const browserify = require('browserify');
 const buffer = require('vinyl-buffer');
 const concat = require('gulp-concat');
+const path = require('path');
 const source = require('vinyl-source-stream');
 const sourcemaps = require('gulp-sourcemaps');
 
@@ -43,8 +45,14 @@ module.exports = (gulp) => {
       debug: true
     })
       .external(vendors)
-      .transform(babelify, {
-        presets: ['es2015', 'react']
+      .transform((file, opts) => {
+        let presets = ['es2015'];
+        if (path.extname(file) === '.jsx') {
+          presets.push('react');
+        }
+        return babelify(file, _.extend({}, opts, { presets: presets }));
+      }, {
+        presets: ["es2015", "react"]
       })
       .bundle()
       .on('error', (err) => {
