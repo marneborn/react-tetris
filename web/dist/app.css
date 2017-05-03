@@ -10,10 +10,22 @@ ol, ul {
 .game {
   display: flex;
   flex-direction: row;
+  height: 500px;
+  width: 100px;
+  border: 1px solid pink;
 }
 
 .game-info {
   margin-left: 20px;
+}
+
+.score-board {
+  width: 100px;
+  height: 50px;
+}
+
+.score-board span {
+  display: block;
 }
 
 .status {
