@@ -9,12 +9,16 @@ class Game extends React.Component {
 
   constructor(...args) {
     super(...args);
+    this.state = {
+      score: 0,
+      level: 1
+    };
   }
 
   render() {
     return (
       <div className="game">
-        <ScoreBoard />
+        <ScoreBoard score={this.state.score} level={this.state.level}/>
       </div>
     );
   }
