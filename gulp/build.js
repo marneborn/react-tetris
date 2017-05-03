@@ -63,17 +63,24 @@ module.exports = (gulp) => {
       .pipe(gulp.dest(distDest));
   });
 
+  gulp.task('build:app:html', () => {
+    return gulp.src('web/html/**/*.html')
+      .pipe(gulp.dest(distDest));
+  });
+
   gulp.task('build:all',
             [
               'build:vendor:js',
               'build:app:js',
-              'build:app:css'
+              'build:app:css',
+              'build:app:html'
             ]
            );
 
   gulp.task('build:continuous', () => {
     gulp.watch(['web/js/**/*.*js', 'web/js/**/*.jsx'], ['build:app:js']);
     gulp.watch('web/css/**/*.css', ['build:app:css']);
+    gulp.watch('web/html/**/*.html', ['build:app:html']);
     gulp.watch([module.filename, '../package.json'], ['build:vendor:js']);
   });
 
