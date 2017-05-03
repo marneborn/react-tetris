@@ -5,21 +5,24 @@ const babel = require('gulp-babel');
 const babelify = require('babelify');
 const browserify = require('browserify');
 const buffer = require('vinyl-buffer');
+const concat = require('gulp-concat');
 const source = require('vinyl-source-stream');
 const sourcemaps = require('gulp-sourcemaps');
 
 const dev = true;
 
-const vendors = ['react', 'react-dom']; //, 'redux', 'react-redux'];
+const distDest = 'web/dist';
+const vendors = ['react', 'react-dom'];
 
 module.exports = (gulp) => {
 
-  gulp.task('build:vendor', () => {
+
+  gulp.task('build:vendor:js', () => {
     const b = browserify({
       debug: true
     });
 
-    // require all libs specified in vendors array
+    // Load each library into the vendor object (no explicit requires...)
     vendors.forEach(lib => {
       b.require(lib);
     });
@@ -29,13 +32,13 @@ module.exports = (gulp) => {
       .pipe(buffer())
       .pipe(sourcemaps.init({loadMaps: true}))
       .pipe(sourcemaps.write('.'))
-      .pipe(gulp.dest('./web/dist/'))
+      .pipe(gulp.dest(distDest))
     ;
   });
 
-  gulp.task('build:app', () => {
+  gulp.task('build:app:js', () => {
     return browserify({
-      entries: 'web/src/app.jsx',
+      entries: 'web/js/app.jsx',
       extensions: ['.js', '.jsx'],
       debug: true
     })
@@ -44,24 +47,34 @@ module.exports = (gulp) => {
         presets: ['es2015', 'react']
       })
       .bundle()
+      .on('error', (err) => {
+        console.log(err.stack);
+      })
       .pipe(source('app.js'))
       .pipe(buffer())
       .pipe(sourcemaps.init({loadMaps: true}))
       .pipe(sourcemaps.write('.'))
-      .pipe(gulp.dest('web/dist'));
+      .pipe(gulp.dest(distDest));
   });
 
-  // This is only for tests...
-  gulp.task('build:jsx', () => {
-    return gulp
-      .src('web/src/**/*.jsx')
-      .pipe($.plumber())
-      .pipe($.if(dev, $.sourcemaps.init()))
-      .pipe($.babel({
-        presets: ['react']
-      }))
-      .pipe($.if(dev, $.sourcemaps.write('.')))
-      .pipe(gulp.dest('web/src'));
+  gulp.task('build:app:css', () => {
+    return gulp.src('web/css/*.css')
+      .pipe(concat('app.css'))
+      .pipe(gulp.dest(distDest));
+  });
+
+  gulp.task('build:all',
+            [
+              'build:vendor:js',
+              'build:app:js',
+              'build:app:css'
+            ]
+           );
+
+  gulp.task('build:continuous', () => {
+    gulp.watch(['web/js/**/*.*js', 'web/js/**/*.jsx'], ['build:app:js']);
+    gulp.watch('web/css/**/*.css', ['build:app:css']);
+    gulp.watch([module.filename, '../package.json'], ['build:vendor:js']);
   });
 
 };

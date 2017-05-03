@@ -2,6 +2,8 @@
 
 const React = require('react');
 
+const ScoreBoard = require('./ScoreBoard');
+
 class Game extends React.Component {
 
   constructor(...args) {
@@ -11,9 +13,7 @@ class Game extends React.Component {
   render() {
     return (
       <div className="game">
-        <div className="game-board">
-        There will be some game here later
-        </div>
+        <ScoreBoard />
       </div>
     );
   }
