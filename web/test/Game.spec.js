@@ -3,7 +3,6 @@
 const Game = require('../js/Game');
 const Promise = require('bluebird');
 const React = require('react');
-const ReactTestUtils = require('react-dom/test-utils');
 const ReactShallowRenderer = require('react-test-renderer/shallow');
 const sinon = require('sinon');
 

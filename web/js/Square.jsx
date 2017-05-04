@@ -6,7 +6,6 @@ const DEFAULT_COLOR = 'black';
 class Square extends React.Component {
   constructor(...args) {
     super(...args);
-    console.log("p" + JSON.stringify(this.props));
     this.state = {
       locked: false,
       color: this.props && this.props.color || null
