@@ -1,10 +1,9 @@
 'use strict';
 
 const _ = require('lodash');
-const $ = require('gulp-load-plugins')();
 const babel = require('gulp-babel');
 const babelify = require('babelify');
-const browserify = require('browserify');
+const Browserify = require('browserify');
 const buffer = require('vinyl-buffer');
 const concat = require('gulp-concat');
 const path = require('path');
@@ -18,18 +17,13 @@ const vendors = ['react', 'react-dom'];
 
 module.exports = (gulp) => {
 
-
   gulp.task('build:vendor:js', () => {
-    const b = browserify({
+    return new Browserify({
+      require: vendors,
       debug: true
-    });
-
-    // Load each library into the vendor object (no explicit requires...)
-    vendors.forEach(lib => {
-      b.require(lib);
-    });
-
-    b.bundle()
+    })
+      .bundle()
+      .on('error', onError)
       .pipe(source('vendor.js'))
       .pipe(buffer())
       .pipe(sourcemaps.init({loadMaps: true}))
@@ -39,7 +33,7 @@ module.exports = (gulp) => {
   });
 
   gulp.task('build:app:js', () => {
-    return browserify({
+    return new Browserify({
       entries: 'web/js/app.jsx',
       extensions: ['.js', '.jsx'],
       debug: true
@@ -51,13 +45,9 @@ module.exports = (gulp) => {
           presets.push('react');
         }
         return babelify(file, _.extend({}, opts, { presets: presets }));
-      }, {
-        presets: ["es2015", "react"]
       })
       .bundle()
-      .on('error', (err) => {
-        console.log(err.stack);
-      })
+      .on('error', onError)
       .pipe(source('app.js'))
       .pipe(buffer())
       .pipe(sourcemaps.init({loadMaps: true}))
@@ -93,3 +83,8 @@ module.exports = (gulp) => {
   });
 
 };
+
+function onError (err) {
+  console.error("-E- " + (err.stack || err.message || err));
+  this.emit('end');
+}
