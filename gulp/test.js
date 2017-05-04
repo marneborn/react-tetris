@@ -13,7 +13,8 @@ module.exports = (gulp) => {
         checkLeaks: true,
         require   : [
           './web/test/utils/globals.js',
-          './web/test/utils/babel.js'
+          './web/test/utils/babel.js',
+          './web/test/utils/dom.js'
         ]
       }));
     });
@@ -21,5 +22,4 @@ module.exports = (gulp) => {
   gulp.task('test:web:unit:continuous', () => {
     gulp.watch(['web/js/**/*.*js', 'web/js/**/*.jsx', 'web/test/**/*.js'], ['test:web:unit']);
   });
-
 };

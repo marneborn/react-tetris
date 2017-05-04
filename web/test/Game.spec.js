@@ -13,13 +13,13 @@ describe('#Game', function() {
 
   describe('initialization', function() {
     it('should have a score of 0', function() {
-      expect(game.state.score).to.equal(0);
+      expect(game.state.score.points).to.equal(0);
     });
     it('should have a level of 1', function() {
-      expect(game.state.level).to.equal(1);
+      expect(game.state.score.level).to.equal(1);
     });
     it('should have no complete rows', function() {
-      expect(game.state.rows).to.equal(0);
+      expect(game.state.score.rows).to.equal(0);
     });
   });
 
@@ -43,54 +43,52 @@ describe('#Game', function() {
 
     it('should increase by level * 40 for 1 row on level 1', function() {
       game.completedRows(1);
-      expect(setState.getCall(0).args[0].score).to.equal(40);
+      expect(setState.getCall(0).args[0].score.points).to.equal(40);
     });
 
     it('should increase by level * 100 for 2 rows on level 1', function() {
       game.completedRows(2);
-      expect(setState.getCall(0).args[0].score).to.equal(100);
+      expect(setState.getCall(0).args[0].score.points).to.equal(100);
     });
 
     it('should increase by level * 300 for 3 rows on level 1', function() {
       game.completedRows(3);
-      expect(setState.getCall(0).args[0].score).to.equal(300);
+      expect(setState.getCall(0).args[0].score.points).to.equal(300);
     });
 
     it('should increase by level * 1200 for 4 rows on level 1', function() {
       game.completedRows(4);
-      expect(setState.getCall(0).args[0].score).to.equal(1200);
+      expect(setState.getCall(0).args[0].score.points).to.equal(1200);
     });
 
     it('should increase by level * 100 for 2 row on level 2', function() {
-      game.state.level = 2;
+      game.state.score.level = 2;
       game.completedRows(2);
     });
 
     it('should increase the number of completed rows', function() {
-      game.state.rows = 4;
+      game.state.score.rows = 4;
       game.completedRows(2);
-      expect(setState.getCall(0).args[0].rows).to.equal(6);
+      expect(setState.getCall(0).args[0].score.rows).to.equal(6);
     });
 
-    it('should increase the level, one per ten completed rows', function() {
-      game.state.rows = 9;
-      game.state.level = 1;
+    it('should increase the level when going from 9 to 10 rows', function() {
+      game.state.score.rows = 9;
       game.completedRows(1);
-      expect(setState.getCall(0).args[0].level).to.equal(2);
+      expect(setState.getCall(0).args[0].score.level).to.equal(2);
     });
 
     it('should not increase the level when going from 8 to 9 rows', function() {
-      game.state.rows = 8;
-      game.state.level = 1;
+      game.state.score.rows = 8;
       game.completedRows(1);
-      expect(setState.getCall(0).args[0].level).to.equal(1);
+      expect(setState.getCall(0).args[0].score.level).to.equal(1);
     });
 
     it('should max level out at 10', function() {
-      game.state.rows = 99;
-      game.state.level = 10;
+      game.state.score.rows = 99;
+      game.state.score.level = 10;
       game.completedRows(1);
-      expect(setState.getCall(0).args[0].level).to.equal(10);
+      expect(setState.getCall(0).args[0].score.level).to.equal(10);
     });
 
   });

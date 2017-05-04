@@ -4,8 +4,6 @@ const CELLS = Symbol('cells');
 const HEIGHT = Symbol('height');
 const WIDTH = Symbol('width');
 
-console.log("Loading Shape");
-
 class Shape {
 
   constructor(opts = {}) {
@@ -15,6 +13,9 @@ class Shape {
     } else {
       this.fromString(opts.shape);
     }
+  }
+  foo() {
+    console.log("FOOOOO");
   }
 
   get [HEIGHT] () {

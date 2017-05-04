@@ -1,9 +1,11 @@
 'use strict';
 
 const React = require('react');
-const Shape = require('./Shape');
 
+const PlayingBoard = require('./PlayingBoard');
+const PreviewBoard = require('./PreviewBoard');
 const ScoreBoard = require('./ScoreBoard');
+const Shape = require('./Shape');
 
 const ROWS_TO_SCORE = {
   1:   40,
@@ -12,33 +14,80 @@ const ROWS_TO_SCORE = {
   4: 1200
 };
 
+const PREVIEW_BOARD = {
+  WIDTH : 5,
+  HEIGHT: 5
+};
+
+const PLAYING_BOARD = {
+  WIDTH : 10,
+  HEIGHT: 25
+};
+
 class Game extends React.Component {
 
   constructor(...args) {
     super(...args);
     this.state = {
-      rows : 0,
-      score: 0,
-      level: 1
+      score: {
+        rows  : 0,
+        points: 0,
+        level : 1
+      }
     };
   }
 
+  // Invoked once before first render
+  componentWillMount() {
+    // Calling setState here does not cause a re-render
+    //alert('In Component Will Mount');
+  }
+
+  // Invoked once after the first render
+  componentDidMount() {
+    // You now have access to this.getDOMNode()
+    //alert('In Component Did Mount');
+  }
+
+  // Invoked whenever there is a prop change
+  // Called BEFORE render
+  componentWillReceiveProps(nextProps) {
+    console.log("next props", nextProps);
+    // Not called for the initial render
+    // Previous props can be accessed by this.props
+    // Calling setState here does not trigger an additional re-render
+    //alert('In Component Will Receive Props');
+  }
+
+  // Called IMMEDIATELY before a component is unmounted
+  componentWillUnmount() {
+    //alert('will unmount');
+  }
+
   completedRows(numberOfRows) {
-    let score = calculateScore(numberOfRows, this.state.level);
-    let rows  = this.state.rows + numberOfRows;
+    let score = calculateScore(numberOfRows, this.state.score.level);
+    let rows  = this.state.score.rows + numberOfRows;
     let level = calculateLevel(rows);
     this.setState({
-      score: score,
-      level: level,
-      rows : rows
+      score: {
+        points: score,
+        level: level,
+        rows : rows
+      }
     });
   }
 
   render() {
+    let previewShape = new Shape({
+      shape: ['xx', 'xx']
+    });
+
     return (
-      <div className="game">
-        <ScoreBoard score={this.state.score} level={this.state.level}/>
-      </div>
+        <div className="game">
+          <ScoreBoard score={this.state.score.points} level={this.state.score.level} />
+          <PlayingBoard width={PLAYING_BOARD.WIDTH} height={PLAYING_BOARD.HEIGHT}/>
+          <PreviewBoard width={PREVIEW_BOARD.WIDTH} height={PREVIEW_BOARD.HEIGHT} shape={previewShape}/>
+        </div>
     );
   }
 }
@@ -54,9 +103,9 @@ function calculateScore(numberOfRows, level) {
 
 // Calculate the level based on the number of rows that have been cleared
 // Max is 10
-function calculateLevel(totalRows) {
-  if (totalRows < 100) {
-    return 1 + Math.floor(totalRows / 10);
+function calculateLevel(rows) {
+  if (rows < 100) {
+    return 1 + Math.floor(rows / 10);
   }
   return 10;
 }
