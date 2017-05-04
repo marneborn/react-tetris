@@ -52,7 +52,6 @@ class Game extends React.Component {
   // Invoked whenever there is a prop change
   // Called BEFORE render
   componentWillReceiveProps(nextProps) {
-    console.log("next props", nextProps);
     // Not called for the initial render
     // Previous props can be accessed by this.props
     // Calling setState here does not trigger an additional re-render
