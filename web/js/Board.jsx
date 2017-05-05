@@ -2,7 +2,6 @@
 
 const React = require('react');
 
-const BoardRow = require('./BoardRow');
 const Square = require('./Square');
 
 const SQUARES = Symbol('squares');
@@ -20,18 +19,6 @@ class PreviewBoard extends React.Component {
       },
       colors: []
     };
-  }
-
-  componentDidMount() {
-    this.timer = setInterval(() => {
-      this.props.shape.rotateRight();
-      this.forceUpdate();
-    }, 500);
-  }
-
-  componentWillUnmount() {
-    // use intervalId from the state to clear the interval
-    clearInterval(this.timer);
   }
 
   pickCellColor(x, y) {
