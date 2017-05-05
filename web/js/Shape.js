@@ -3,6 +3,9 @@
 const CELLS = Symbol('cells');
 const HEIGHT = Symbol('height');
 const WIDTH = Symbol('width');
+const COLOR = Symbol('color');
+
+const DEFAULT_COLOR = 'pink';
 
 class Shape {
 
@@ -13,9 +16,16 @@ class Shape {
     } else {
       this.fromString(opts.shape);
     }
+
+    this[COLOR] = opts.color || DEFAULT_COLOR;
   }
+
   foo() {
     console.log("FOOOOO");
+  }
+
+  get color() {
+    return this[COLOR];
   }
 
   get [HEIGHT] () {
@@ -62,7 +72,7 @@ class Shape {
 
   toJSON() {
     return this.toString();
-    }
+  }
 
   toString() {
     return this[CELLS]
@@ -83,6 +93,27 @@ class Shape {
       }
       return row;
     });
+  }
+
+  // internally y=0 is the top, but from the outside worlds POV it's the bottom.
+  isSet(pos) {
+    if (pos.x < 0 || pos.y < 0 || pos.y >= this[HEIGHT] || pos.x >= this[WIDTH]) {
+      return false;
+    }
+    return this[CELLS][this[CELLS].length - pos.y - 1][pos.x];
+  }
+
+  // internally y=0 is the top, but from the outside worlds POV it's the bottom.
+  getSetCells() {
+    let setCells = [];
+    for (let i = 0; i < this[CELLS].length; i++) {
+      for (let j = 0; j < this[CELLS][i].length; j++) {
+        if (this[CELLS][i][j]) {
+          setCells.push({x: j, y: this[CELLS].length - i - 1});
+        }
+      }
+    }
+    return setCells;
   }
 }
 

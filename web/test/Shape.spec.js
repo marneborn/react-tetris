@@ -80,7 +80,47 @@ describe('#Shape', function() {
         '.....'
       ]));
     });
+  });
+
+  describe('.isSet', function() {
+    let shape;
+    beforeEach('Create the shape', function() {
+      const def = [
+        '.XX',
+        '.X.',
+        '..X'
+      ];
+
+      shape = new Shape({ shape: def });
+    });
+
+    it('should know that {x:1, y:0} is not set', function() {
+      expect(shape.isSet({x: 1, y:0})).to.equal(false);
+    });
+
+    it('should know that {x:1, y:2} is set', function() {
+      expect(shape.isSet({x: 1, y:2})).to.equal(true);
+    });
 
   });
 
+  describe('.getSetCells', function() {
+
+    it('should get the x,y coordinates of set cells in the shape', function() {
+      const def = [
+        '.XX',
+        '.X.',
+        '..X'
+      ];
+
+      const shape = new Shape({ shape: def });
+      expect(shape.getSetCells()).to.deep.include.members([
+        {y: 0, x: 2},
+        {y: 1, x: 1},
+        {y: 2, x: 1},
+        {y: 2, x: 2}
+      ]);
+
+    });
+  });
 });

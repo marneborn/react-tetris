@@ -15,8 +15,8 @@ const ROWS_TO_SCORE = {
 };
 
 const PREVIEW_BOARD = {
-  WIDTH : 5,
-  HEIGHT: 5
+  WIDTH : 6,
+  HEIGHT: 6
 };
 
 const PLAYING_BOARD = {
@@ -33,6 +33,13 @@ class Game extends React.Component {
         rows  : 0,
         points: 0,
         level : 1
+      },
+      preview: {
+        shape   : new Shape({
+          shape: ['....', '.xx.', '.x..', '....'],
+          color: 'pink'
+        }),
+        initialPosition: { x: 1, y: 1}
       }
     };
   }
@@ -77,16 +84,11 @@ class Game extends React.Component {
   }
 
   render() {
-    let previewShape = new Shape({
-      shape: ['xx', 'xx']
-    });
-
     return (
-        <div className="game">
-          <ScoreBoard score={this.state.score.points} level={this.state.score.level} />
-          <PlayingBoard width={PLAYING_BOARD.WIDTH} height={PLAYING_BOARD.HEIGHT}/>
-          <PreviewBoard width={PREVIEW_BOARD.WIDTH} height={PREVIEW_BOARD.HEIGHT} shape={previewShape}/>
-        </div>
+      <div className="game">
+        <ScoreBoard score={this.state.score.points} level={this.state.score.level} />
+        <PreviewBoard width={PREVIEW_BOARD.WIDTH} height={PREVIEW_BOARD.HEIGHT} shape={this.state.preview.shape} initialPosition={this.state.preview.initialPosition}/>
+      </div>
     );
   }
 }
