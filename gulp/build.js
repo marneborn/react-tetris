@@ -13,7 +13,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const dev = true;
 
 const distDest = 'web/dist';
-const vendors = ['react', 'react-dom'];
+const vendors = ['react', 'react-dom', 'immutability-helper'];
 
 module.exports = (gulp) => {
 
