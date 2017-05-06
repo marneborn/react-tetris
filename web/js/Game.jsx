@@ -3,7 +3,7 @@
 const React = require('react');
 const update = require('immutability-helper');
 
-const Board = require('./Board');
+const PlayingBoard = require('./PlayingBoard');
 const ScoreBoard = require('./ScoreBoard');
 const Shape = require('./Shape');
 
@@ -48,6 +48,10 @@ class Game extends React.Component {
     };
   }
 
+  onKeyDownEvent(e) {
+    console.log('key', e.keyCode);
+  }
+
   componentDidMount() {
     return;
     this.timer = setInterval(() => {
@@ -73,11 +77,21 @@ class Game extends React.Component {
     }));
   }
 
+  handleKeyDown(event) {
+    // 'ArrowLeft';
+    console.log("a> " + event.key);
+    console.log(event);
+  }
+
+  foo() {
+    console.log("FOO");
+  }
+
   render() {
     return (
       <div className="game">
         <ScoreBoard completedRows={this.state.completedRows}/>
-        <Board
+        <PlayingBoard
            cssClass="playing"
            width={PLAYING_BOARD.WIDTH}
            height={PLAYING_BOARD.HEIGHT}
@@ -85,6 +99,7 @@ class Game extends React.Component {
            shape={this.state.playing.shape}
            initialPosition={PLAYING_BOARD.SHAPE_START}
            speed={this.state.playing.speed}
+           bar={this.foo.bind(this)}
            />
         <button onClick={() => this.startPlaying()}>Start</button>
       </div>
