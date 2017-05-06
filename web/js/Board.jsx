@@ -1,6 +1,7 @@
 'use strict';
 
 const React = require('react');
+const PropTypes = require('prop-types');
 
 const Square = require('./Square');
 
@@ -8,10 +9,11 @@ const SQUARES = Symbol('squares');
 
 const BACKGROUND_COLOR = 'black';
 
-class PreviewBoard extends React.Component {
+class Board extends React.Component {
 
   constructor(...args) {
     super(...args);
+    let pos =
     this.state = {
       shapePosition: {
         x: this.props.initialPosition.x,
@@ -26,7 +28,7 @@ class PreviewBoard extends React.Component {
       return this.state.colors[y][x];
     }
 
-    if (this.props.shape.isSet({
+    if (this.props.shape && this.props.shape.isSet({
       x: x - this.state.shapePosition.x,
       y: y - this.state.shapePosition.y
     })) {
@@ -41,9 +43,9 @@ class PreviewBoard extends React.Component {
     for (let i = this.props.height - 1; i >= 0; i--) {
       let row = [];
       for (let j = 0; j < this.props.width; j++) {
-        row.push(<Square color={this.pickCellColor(j, i)} />);
+        row.push(<Square key={j+'x'+i} color={this.pickCellColor(j, i)} />);
       }
-      rows.push(<div className="board-row">{row}</div>);
+      rows.push(<div key={i} className="board-row">{row}</div>);
     }
     return (
       <div className="preview-board board">
@@ -53,7 +55,7 @@ class PreviewBoard extends React.Component {
   }
 }
 
-module.exports = PreviewBoard;
+module.exports = Board;
 
 function createSquares(width, height) {
   let squares = [];
@@ -65,3 +67,9 @@ function createSquares(width, height) {
   }
   return squares;
 }
+
+Board.propTypes = {
+  initialPosition: PropTypes.object.isRequired,
+  height: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired
+};

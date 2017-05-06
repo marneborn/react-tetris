@@ -43,7 +43,7 @@ class Game extends React.Component {
           shape: new Shape(SHAPES[this.shapeIdx])
         }
       });
-    }, 500);
+    }, 3000);
   }
 
   componentWillUnmount() {

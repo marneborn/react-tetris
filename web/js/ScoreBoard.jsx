@@ -45,7 +45,7 @@ class ScoreBoard extends React.Component {
     return (
       <div className="score-board">
         <span>Level: {this.state.level}</span>
-        <span>Score: {this.state.score}</span>
+        <span>Score: {this.state.points}</span>
       </div>
     );
   }
