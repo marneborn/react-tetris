@@ -26,8 +26,9 @@ describe('#Board', function() {
       const shallow = new ReactShallowRenderer();
       shallow.render(React.createElement(Board, {
         initialPosition: {x: 1, y: 1},
-        height: 1,
-        width: 1
+        height         : 1,
+        width          : 1,
+        cssClass       : 'foo'
       }));
       showError();
       expect(console.error.called).to.equal(false);
@@ -37,8 +38,9 @@ describe('#Board', function() {
       expect(() => {
         const shallow = new ReactShallowRenderer();
         shallow.render(React.createElement(Board, {
-          height: 1,
-          width: 1
+          height  : 1,
+          width   : 1,
+          cssClass: 'foo'
         }));
       }).to.throw();
     });
@@ -47,7 +49,8 @@ describe('#Board', function() {
       const shallow = new ReactShallowRenderer();
       shallow.render(React.createElement(Board, {
         initialPosition: {x: 1, y: 1},
-        width: 1
+        width          : 1,
+        cssClass       : 'foo'
       }));
       expect(console.error.called).to.equal(true);
     });
@@ -56,7 +59,8 @@ describe('#Board', function() {
       const shallow = new ReactShallowRenderer();
       shallow.render(React.createElement(Board, {
         initialPosition: {x: 1, y: 1},
-        height: 1
+        height         : 1,
+        cssClass       : 'foo'
       }));
       expect(console.error.called).to.equal(true);
     });

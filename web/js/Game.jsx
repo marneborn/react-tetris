@@ -10,12 +10,22 @@ const SHAPES = require('./standardShapes');
 
 const PREVIEW_BOARD = {
   WIDTH : 6,
-  HEIGHT: 6
+  HEIGHT: 6,
+  CSS_CLASS: 'preview',
+  SHAPE_START: {
+    x: 1,
+    y: 1
+  }
 };
 
 const PLAYING_BOARD = {
   WIDTH : 10,
-  HEIGHT: 25
+  HEIGHT: 25,
+  CSS_CLASS: 'playing',
+  SHAPE_START: {
+    x: 1,
+    y: 1
+  }
 };
 
 class Game extends React.Component {
@@ -26,8 +36,10 @@ class Game extends React.Component {
     this.state = {
       completedRows: 0,
       preview: {
-        shape   : null,
-        initialPosition: { x: 1, y: 1}
+        shape   : null
+      },
+      playing: {
+        shape: null
       }
     };
   }
@@ -55,7 +67,20 @@ class Game extends React.Component {
     return (
       <div className="game">
         <ScoreBoard completedRows={this.state.completedRows}/>
-        <Board width={PREVIEW_BOARD.WIDTH} height={PREVIEW_BOARD.HEIGHT} shape={this.state.preview.shape} initialPosition={this.state.preview.initialPosition}/>
+        <Board
+           cssClass="playing"
+           width={PLAYING_BOARD.WIDTH}
+           height={PLAYING_BOARD.HEIGHT}
+           shape={this.state.preview.shape}
+           initialPosition={PLAYING_BOARD.SHAPE_START}
+        />
+        <Board
+           cssClass="preview"
+           width={PREVIEW_BOARD.WIDTH}
+           height={PREVIEW_BOARD.HEIGHT}
+           shape={this.state.preview.shape}
+           initialPosition={PREVIEW_BOARD.SHAPE_START}
+        />
       </div>
     );
   }

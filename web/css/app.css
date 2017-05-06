@@ -37,17 +37,18 @@ ol, ul {
 }
 
 /* Good place for sass-json... */
-.playing-board {
+.board.playing {
   width: 100px; /* 10 * 10 */
   height: 250px; /* 25 * 10 */
 }
 
-.preview-board {
+.board.preview {
+  background: grey;
   width: 60px; /* 6 * 10 */
   height: 60px; /* 6 * 10 */
 }
 
-.board-row:after {
+.board .row:after {
   clear: both;
   content: "";
   display: table;
@@ -55,15 +56,11 @@ ol, ul {
 
 .square {
   background: #000;
-  border: 1px solid #999;
-  box-sizing: border-box;
   float: left;
   font-size: 24px;
   font-weight: bold;
   line-height: 34px;
   height: 10px;
-  margin-right: -1px;
-  margin-top: -1px;
   padding: 0;
   text-align: center;
   vertical-align: middle;

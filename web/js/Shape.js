@@ -20,10 +20,6 @@ class Shape {
     this[COLOR] = opts.color || DEFAULT_COLOR;
   }
 
-  foo() {
-    console.log("FOOOOO");
-  }
-
   get color() {
     return this[COLOR];
   }

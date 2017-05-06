@@ -45,10 +45,10 @@ class Board extends React.Component {
       for (let j = 0; j < this.props.width; j++) {
         row.push(<Square key={j+'x'+i} color={this.pickCellColor(j, i)} />);
       }
-      rows.push(<div key={i} className="board-row">{row}</div>);
+      rows.push(<div key={i} className="row">{row}</div>);
     }
     return (
-      <div className="preview-board board">
+      <div className={'board ' + this.props.cssClass}>
         {rows}
       </div>
     );
@@ -70,6 +70,7 @@ function createSquares(width, height) {
 
 Board.propTypes = {
   initialPosition: PropTypes.object.isRequired,
-  height: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired
+  height         : PropTypes.number.isRequired,
+  width          : PropTypes.number.isRequired,
+  cssClass       : PropTypes.string.isRequired
 };
