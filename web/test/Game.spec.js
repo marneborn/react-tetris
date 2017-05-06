@@ -23,8 +23,5 @@ describe('#Game', function() {
     it('should start with no preview shape', function() {
       expect(game.state.preview.shape).to.equal(null);
     });
-    it('should start with preview shape placed at {1,1}', function() {
-      expect(game.state.preview.initialPosition).to.deep.equal({x:1, y:1});
-    });
   });
 });

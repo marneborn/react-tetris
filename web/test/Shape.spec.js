@@ -82,10 +82,12 @@ describe('#Shape', function() {
     });
   });
 
-  describe('.isSet', function() {
+  describe('common shape...', function() {
+
     let shape;
     beforeEach('Create the shape', function() {
       const def = [
+        '...',
         '.XX',
         '.X.',
         '..X'
@@ -102,25 +104,13 @@ describe('#Shape', function() {
       expect(shape.isSet({x: 1, y:2})).to.equal(true);
     });
 
-  });
-
-  describe('.getSetCells', function() {
-
     it('should get the x,y coordinates of set cells in the shape', function() {
-      const def = [
-        '.XX',
-        '.X.',
-        '..X'
-      ];
-
-      const shape = new Shape({ shape: def });
       expect(shape.getSetCells()).to.deep.include.members([
         {y: 0, x: 2},
         {y: 1, x: 1},
         {y: 2, x: 1},
         {y: 2, x: 2}
       ]);
-
     });
   });
 });

@@ -1,9 +1,8 @@
 'use strict';
 
 const CELLS = Symbol('cells');
-const HEIGHT = Symbol('height');
-const WIDTH = Symbol('width');
 const COLOR = Symbol('color');
+// FIXME: Symbols for HEIGHT and WIDTH
 
 const DEFAULT_COLOR = 'pink';
 
@@ -24,17 +23,17 @@ class Shape {
     return this[COLOR];
   }
 
-  get [HEIGHT] () {
+  get _height() {
     return this[CELLS].length;
   }
 
-  get [WIDTH]() {
-    return this[HEIGHT] > 0 ? this[CELLS][0].length : 0;
+  get _width() {
+    return this._height > 0 ? this[CELLS][0].length : 0;
   }
 
   rotateRight() {
-    const H = this[HEIGHT];
-    const W = this[WIDTH];
+    const H = this._height;
+    const W = this._width;
     let tmp = [];
     let i, j;
     for (i = 0; i < W; i++) {
@@ -50,8 +49,8 @@ class Shape {
   }
 
   rotateLeft() {
-    const H = this[HEIGHT];
-    const W = this[WIDTH];
+    const H = this._height;
+    const W = this._width;
     let tmp = [];
     let i, j;
     for (i = 0; i < W; i++) {
@@ -93,7 +92,7 @@ class Shape {
 
   // internally y=0 is the top, but from the outside worlds POV it's the bottom.
   isSet(pos) {
-    if (pos.x < 0 || pos.y < 0 || pos.y >= this[HEIGHT] || pos.x >= this[WIDTH]) {
+    if (pos.x < 0 || pos.y < 0 || pos.y >= this._height || pos.x >= this._width) {
       return false;
     }
     return this[CELLS][this[CELLS].length - pos.y - 1][pos.x];

@@ -48,6 +48,10 @@ ol, ul {
   height: 60px; /* 6 * 10 */
 }
 
+.board .row.hidden {
+  display: none;
+}
+
 .board .row:after {
   clear: both;
   content: "";
@@ -56,6 +60,8 @@ ol, ul {
 
 .square {
   background: #000;
+  border: 1px solid white;
+  box-sizing: border-box;
   float: left;
   font-size: 24px;
   font-weight: bold;

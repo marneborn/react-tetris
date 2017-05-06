@@ -1,6 +1,7 @@
 'use strict';
 
 const React = require('react');
+const update = require('immutability-helper');
 
 const Board = require('./Board');
 const ScoreBoard = require('./ScoreBoard');
@@ -21,10 +22,11 @@ const PREVIEW_BOARD = {
 const PLAYING_BOARD = {
   WIDTH : 10,
   HEIGHT: 25,
+  VISIBLE_HEIGHT: 20,
   CSS_CLASS: 'playing',
   SHAPE_START: {
-    x: 1,
-    y: 1
+    x: 3,
+    y: 18
   }
 };
 
@@ -36,15 +38,18 @@ class Game extends React.Component {
     this.state = {
       completedRows: 0,
       preview: {
-        shape   : null
+        shape: null,
+        speed: 0
       },
       playing: {
-        shape: null
+        shape: new Shape(SHAPES[0]),
+        speed: 0
       }
     };
   }
 
   componentDidMount() {
+    return;
     this.timer = setInterval(() => {
       this.shapeIdx++;
       if (this.shapeIdx === SHAPES.length) {
@@ -59,8 +64,13 @@ class Game extends React.Component {
   }
 
   componentWillUnmount() {
-    // use intervalId from the state to clear the interval
-    clearInterval(this.timer);
+    this.timer && clearInterval(this.timer);
+  }
+
+  startPlaying() {
+    this.setState(update(this.state, {
+      playing: { speed: { $set: 500 } }
+    }));
   }
 
   render() {
@@ -71,16 +81,12 @@ class Game extends React.Component {
            cssClass="playing"
            width={PLAYING_BOARD.WIDTH}
            height={PLAYING_BOARD.HEIGHT}
-           shape={this.state.preview.shape}
+           visibleHeight={PLAYING_BOARD.VISIBLE_HEIGHT}
+           shape={this.state.playing.shape}
            initialPosition={PLAYING_BOARD.SHAPE_START}
-        />
-        <Board
-           cssClass="preview"
-           width={PREVIEW_BOARD.WIDTH}
-           height={PREVIEW_BOARD.HEIGHT}
-           shape={this.state.preview.shape}
-           initialPosition={PREVIEW_BOARD.SHAPE_START}
-        />
+           speed={this.state.playing.speed}
+           />
+        <button onClick={() => this.startPlaying()}>Start</button>
       </div>
     );
   }
